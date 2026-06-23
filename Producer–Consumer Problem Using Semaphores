@@ -1,0 +1,75 @@
+#include <stdio.h>
+
+int mutex = 1;
+int full = 0;
+int empty = 5;
+int item = 0;
+
+void wait(int *s)
+{
+    (*s)--;
+}
+
+void signal(int *s)
+{
+    (*s)++;
+}
+
+void produce()
+{
+    if(empty > 0 && mutex == 1)
+    {
+        wait(&mutex);
+        wait(&empty);
+
+        item++;
+
+        signal(&full);
+        signal(&mutex);
+
+        printf("Produced Item %d\n", item);
+    }
+    else
+    {
+        printf("Buffer is Full\n");
+    }
+}
+
+void consume()
+{
+    if(full > 0 && mutex == 1)
+    {
+        wait(&mutex);
+        wait(&full);
+
+        printf("Consumed Item %d\n", item);
+        item--;
+
+        signal(&empty);
+        signal(&mutex);
+    }
+    else
+    {
+        printf("Buffer is Empty\n");
+    }
+}
+
+int main()
+{
+    int choice;
+
+    while(1)
+    {
+        printf("\n1. Produce\n2. Consume\n3. Exit\n");
+        scanf("%d", &choice);
+
+        if(choice == 1)
+            produce();
+        else if(choice == 2)
+            consume();
+        else
+            break;
+    }
+
+    return 0;
+}
