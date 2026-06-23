@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+int state[5] = {0, 0, 0, 0, 0};
+
+void takeFork(int p)
+{
+    if (state[p] == 0)
+    {
+        state[p] = 1;
+        printf("Philosopher %d is Eating\n", p + 1);
+    }
+}
+
+void putFork(int p)
+{
+    if (state[p] == 1)
+    {
+        state[p] = 0;
+        printf("Philosopher %d is Thinking\n", p + 1);
+    }
+}
+
+int main()
+{
+    int choice, p;
+
+    while (1)
+    {
+        printf("\n1.Take Fork\n2.Put Fork\n3.Exit\n");
+        scanf("%d", &choice);
+
+        if (choice == 3)
+            break;
+
+        printf("Enter Philosopher Number (1-5): ");
+        scanf("%d", &p);
+
+        if (p < 1 || p > 5)
+        {
+            printf("Invalid Philosopher\n");
+            continue;
+        }
+
+        if (choice == 1)
+            takeFork(p - 1);
+        else if (choice == 2)
+            putFork(p - 1);
+    }
+
+    return 0;
+}
