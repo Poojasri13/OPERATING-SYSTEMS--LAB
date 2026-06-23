@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int n, i, j, temp;
+    int request[20];
+    int head;
+    int total = 0;
+
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    printf("Enter request queue:\n");
+    for(i = 0; i < n; i++)
+    {
+        scanf("%d", &request[i]);
+    }
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    for(i = 0; i < n - 1; i++)
+    {
+        for(j = i + 1; j < n; j++)
+        {
+            if(request[i] > request[j])
+            {
+                temp = request[i];
+                request[i] = request[j];
+                request[j] = temp;
+            }
+        }
+    }
+
+    for(i = 0; i < n; i++)
+    {
+        if(request[i] >= head)
+        {
+            total += abs(request[i] - head);
+            head = request[i];
+        }
+    }
+
+    for(i = n - 1; i >= 0; i--)
+    {
+        if(request[i] < head)
+        {
+            total += abs(request[i] - head);
+            head = request[i];
+        }
+    }
+
+    printf("Total Seek Time = %d\n", total);
+
+    return 0;
+}
