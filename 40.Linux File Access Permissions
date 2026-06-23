@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <sys/stat.h>
+
+int main()
+{
+    struct stat fileStat;
+    char filename[100];
+
+    printf("Enter file name: ");
+    scanf("%s", filename);
+
+    if(stat(filename, &fileStat) != 0)
+    {
+        printf("Unable to access file\n");
+        return 1;
+    }
+
+    printf("Owner Permissions:\n");
+
+    if(fileStat.st_mode & S_IRUSR)
+        printf("Read\n");
+
+    if(fileStat.st_mode & S_IWUSR)
+        printf("Write\n");
+
+    if(fileStat.st_mode & S_IXUSR)
+        printf("Execute\n");
+
+    printf("Group Permissions:\n");
+
+    if(fileStat.st_mode & S_IRGRP)
+        printf("Read\n");
+
+    if(fileStat.st_mode & S_IWGRP)
+        printf("Write\n");
+
+    if(fileStat.st_mode & S_IXGRP)
+        printf("Execute\n");
+
+    printf("Others Permissions:\n");
+
+    if(fileStat.st_mode & S_IROTH)
+        printf("Read\n");
+
+    if(fileStat.st_mode & S_IWOTH)
+        printf("Write\n");
+
+    if(fileStat.st_mode & S_IXOTH)
+        printf("Execute\n");
+
+    return 0;
+}
